@@ -1,0 +1,1266 @@
+<!DOCTYPE html>
+<html lang="si">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#080000">
+
+<title>MENU BOY AVIATOR TIME PRO</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700;800&display=swap');
+
+:root{
+--bg:#080000;
+--panel:#160609;
+--red:#ff1735;
+--text:#fff1f3;
+--muted:#b88b91;
+--line:#5d1020;
+}
+
+*{
+box-sizing:border-box;
+margin:0;
+padding:0;
+}
+
+body{
+min-height:100vh;
+padding:16px;
+background:radial-gradient(ellipse at top,#3b000d 0,#100004 43%,#050000 100%);
+color:var(--text);
+font-family:'JetBrains Mono',monospace;
+}
+
+/* LOGIN SCREEN */
+
+#loginGate{
+position:fixed;
+inset:0;
+z-index:99999;
+background:radial-gradient(circle,#500010,#080000);
+display:flex;
+align-items:center;
+justify-content:center;
+padding:20px;
+}
+
+.login-box{
+width:100%;
+max-width:360px;
+padding:25px;
+background:linear-gradient(160deg,#260008,#090000);
+border:2px solid var(--red);
+border-radius:20px;
+text-align:center;
+box-shadow:0 0 35px #ff1735;
+}
+
+.login-logo{
+font-size:27px;
+font-weight:800;
+color:#ff304b;
+text-shadow:0 0 15px #ff1735;
+margin-bottom:10px;
+}
+
+.login-subtitle{
+font-size:11px;
+color:#ffd1d7;
+letter-spacing:2px;
+margin-bottom:18px;
+}
+
+.login-box label{
+display:block;
+text-align:left;
+color:#ff8797;
+font-size:11px;
+margin-bottom:7px;
+}
+
+#loginError{
+color:#ff304b;
+font-size:11px;
+min-height:25px;
+margin-top:10px;
+}
+
+.login-info{
+font-size:9px;
+color:#a9858b;
+line-height:1.8;
+margin-top:15px;
+}
+
+/* MAIN APP */
+
+#appContent{
+display:none;
+}
+
+.container{
+width:min(100%,540px);
+margin:0 auto;
+padding:17px;
+background:linear-gradient(160deg,#21070c,#0d0305 65%);
+border:1px solid var(--red);
+border-radius:20px;
+box-shadow:0 0 30px #ff002a30;
+}
+
+.banner{
+position:relative;
+overflow:hidden;
+min-height:142px;
+margin-bottom:18px;
+border:1px solid #ff5268;
+border-radius:15px;
+background:linear-gradient(115deg,#570010,#160006 48%,#85001b);
+display:grid;
+place-items:center;
+text-align:center;
+padding:20px;
+}
+
+.banner-content{
+position:relative;
+z-index:1;
+}
+
+.brand{
+font-size:clamp(23px,7vw,34px);
+font-weight:800;
+letter-spacing:2px;
+color:#fff;
+text-shadow:0 0 15px #ff1735;
+}
+
+.subbrand{
+font-size:11px;
+letter-spacing:3px;
+color:#ffbdc6;
+margin-top:8px;
+}
+
+.tag{
+display:inline-block;
+margin-top:12px;
+padding:5px 12px;
+border:1px solid #ff8090;
+border-radius:30px;
+background:#2a000b;
+color:#fff;
+font-size:10px;
+}
+
+h1{
+text-align:center;
+color:#ff304b;
+font-size:clamp(21px,5vw,27px);
+margin-bottom:7px;
+}
+
+.subtitle{
+text-align:center;
+color:#d49aa2;
+font-size:10px;
+letter-spacing:2px;
+margin-bottom:17px;
+}
+
+.role-badge{
+display:block;
+width:max-content;
+margin:0 auto 15px;
+padding:7px 15px;
+border:1px solid #ff304b;
+border-radius:30px;
+background:#38000c;
+color:#fff;
+font-size:10px;
+}
+
+.notice{
+text-align:center;
+color:#ffd1d7;
+font-size:10px;
+border:1px solid var(--line);
+background:#21060c;
+padding:10px;
+border-radius:9px;
+margin-bottom:17px;
+line-height:1.6;
+}
+
+.section-title{
+font-size:12px;
+color:#ff8797;
+border-bottom:1px solid #651627;
+padding-bottom:8px;
+margin:20px 0 10px;
+letter-spacing:1px;
+}
+
+label{
+display:block;
+color:#ff7385;
+font-size:12px;
+font-weight:700;
+margin:14px 0 7px;
+}
+
+input,select{
+width:100%;
+padding:13px;
+border:1px solid #9e1730;
+border-radius:10px;
+background:#080204;
+color:#fff;
+font:600 15px 'JetBrains Mono',monospace;
+outline:none;
+}
+
+input:focus,select:focus{
+border-color:#ff5268;
+box-shadow:0 0 0 3px #ff173522;
+}
+
+button{
+width:100%;
+padding:13px;
+margin-top:11px;
+border:1px solid #ff6679;
+border-radius:10px;
+background:linear-gradient(135deg,#ff2442,#970018);
+color:#fff;
+font:800 13px 'JetBrains Mono',monospace;
+cursor:pointer;
+}
+
+button:active{
+transform:scale(.98);
+}
+
+button.secondary{
+background:#291017;
+border-color:#773044;
+color:#ffdce1;
+}
+
+button.danger{
+display:none;
+background:linear-gradient(135deg,#ff0000,#650000);
+border:2px solid #ff8290;
+animation:pulse 1s infinite;
+}
+
+.results,.multi-grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:9px;
+margin-top:13px;
+}
+
+.result,.multi-card{
+min-width:0;
+text-align:center;
+padding:13px 7px;
+background:linear-gradient(180deg,#21070d,#0b0204);
+border:1px solid #a3132d;
+border-radius:12px;
+}
+
+.result h3,.multi-card h3{
+font-size:10px;
+color:#ff9aa8;
+margin-bottom:8px;
+}
+
+.time{
+font-size:clamp(16px,4.7vw,23px);
+font-weight:800;
+color:#ff304b;
+text-shadow:0 0 12px #ff002a;
+overflow-wrap:anywhere;
+}
+
+.offset,.multi-card p{
+font-size:9px;
+color:#bd8c95;
+margin-top:6px;
+}
+
+.controls{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:9px;
+}
+
+#status{
+text-align:center;
+padding:13px;
+margin-top:15px;
+border:1px solid #631526;
+border-radius:9px;
+background:#16050a;
+color:#ff7587;
+font-size:11px;
+line-height:1.6;
+}
+
+.alarm-active{
+background:#b50020!important;
+color:#fff!important;
+animation:pulse .8s infinite;
+}
+
+@keyframes pulse{
+50%{
+box-shadow:0 0 22px #ff002a;
+}
+}
+
+.note{
+margin-top:12px;
+color:#a9858b;
+font-size:9px;
+line-height:1.7;
+text-align:center;
+}
+
+.footer{
+text-align:center;
+color:#77565d;
+font-size:9px;
+letter-spacing:1.5px;
+margin-top:19px;
+line-height:2;
+}
+
+/* ADMIN ONLY ELEMENTS */
+
+.admin-only{
+display:block;
+}
+
+@media(max-width:360px){
+body{
+padding:8px;
+}
+.container{
+padding:11px;
+}
+.results,.multi-grid{
+gap:6px;
+}
+.result,.multi-card{
+padding:10px 5px;
+}
+}
+</style>
+</head>
+
+<body>
+
+<!-- LOGIN SCREEN -->
+
+<div id="loginGate">
+
+<div class="login-box">
+
+<div class="login-logo">MENU BOY</div>
+
+<div class="login-subtitle">
+DUAL TIME PRO SECURITY
+</div>
+
+<p style="color:#fff;font-size:12px;margin-bottom:15px;">
+🔐 ENTER ACCESS PASSWORD
+</p>
+
+<label for="accessKey">PASSWORD</label>
+
+<input
+type="password"
+id="accessKey"
+placeholder="Enter Admin / User Password"
+autocomplete="off"
+>
+
+<button id="loginBtn" type="button">
+LOGIN SYSTEM 🔓
+</button>
+
+<p id="loginError"></p>
+
+<div class="login-info">
+SECURE ACCESS SYSTEM<br>
+MENU BOY AVIATOR TIME PRO
+</div>
+
+</div>
+</div>
+
+
+<!-- MAIN APPLICATION -->
+
+<div id="appContent">
+
+<main class="container">
+
+<header class="banner">
+
+<div class="banner-content">
+
+<div class="brand">1XBET AVIATOR</div>
+
+<div class="subbrand">
+MENU BOY • TIME PRO
+</div>
+
+<div class="tag">
+TIME CALCULATOR • ALARM SYSTEM
+</div>
+
+</div>
+</header>
+
+<div id="roleBadge" class="role-badge">
+USER ACCESS
+</div>
+
+<h1>TIME PRO</h1>
+
+<p class="subtitle">
+MULTI TIME CALCULATOR & REPEATING ALARM
+</p>
+
+<div class="notice">
+🔴 TIME CALCULATOR ONLY · NO GAME PREDICTIONS
+<br>
+ගණනය කළ වේලාවන් පමණක් පෙන්වයි.
+</div>
+
+
+<!-- TIME INPUT -->
+
+<div class="section-title">
+01 / TIME INPUT
+</div>
+
+<label for="value">
+6.99X වැඩි ODD අගය ඇතුළත් කරන්න
+</label>
+
+<input
+id="value"
+type="number"
+inputmode="decimal"
+min="0"
+step="0.01"
+placeholder="උදා: 8.50"
+>
+
+<label for="startTime">
+ආරම්භක වේලාව
+</label>
+
+<input
+id="startTime"
+type="time"
+step="1"
+>
+
+<button id="calculateBtn" type="button">
+GENERATE SIGNAL & CALCULATE
+</button>
+
+
+<!-- DUAL TIME -->
+
+<div class="section-title">
+02 / ODD BASED DUAL TIME
+</div>
+
+<section class="results">
+
+<div class="result">
+<h3>🔴 FIRST TIME</h3>
+<div class="time" id="time1">--:--:--</div>
+<div class="offset" id=""></div>
+</div>
+
+<div class="result">
+<h3>🔴 SECOND TIME</h3>
+<div class="time" id="time2">--:--:--</div>
+<div class="offset" id=""></div>
+</div>
+
+</section>
+
+
+<!-- EXTRA TIMES -->
+
+<div class="section-title">
+03 / EXTRA TIME SIGNALS
+</div>
+
+<section class="multi-grid">
+
+
+
+
+
+
+
+
+
+<div class="multi-card">
+<h3>ALARM STATUS</h3>
+<div class="time" id="alarmCount">0</div>
+<p>ALARM TIMES SET</p>
+</div>
+
+</section>
+
+
+<!-- ALARM SETTINGS -->
+
+<div class="section-title">
+04 / ADVANCED ALARM SETTINGS
+</div>
+
+<label for="repeatSeconds" class="admin-only">
+Alarm නැවත නාද වන කාලය
+</label>
+
+<select id="repeatSeconds" class="admin-only">
+
+<option value="3">තත්පර 3කට වරක්</option>
+<option value="5">තත්පර 5කට වරක්</option>
+<option value="10">තත්පර 10කට වරක්</option>
+<option value="15">තත්පර 15කට වරක්</option>
+
+</select>
+
+<label for="alarmSound" class="admin-only">
+Signal / Alarm ශබ්ද රටාව
+</label>
+
+<select id="alarmSound" class="admin-only">
+
+<option value="triple">Triple Beep</option>
+<option value="siren">Siren Style</option>
+<option value="short">Short Beep</option>
+
+</select>
+
+
+<div class="controls">
+
+<button class="secondary" id="soundBtn" type="button">
+SOUND ON 🔔
+</button>
+
+<button class="secondary" id="testBtn" type="button">
+TEST SOUND 🔊
+</button>
+
+</div>
+
+<button class="danger" id="stopBtn" type="button">
+STOP ALL ALARMS ⛔
+</button>
+
+<button class="secondary admin-only" id="resetBtn" type="button">
+RESET ALL ↻
+</button>
+
+
+<p id="status" role="status">
+SYSTEM READY — ODD අගය සහ වේලාව ඇතුළත් කරන්න.
+</p>
+
+<p class="note">
+Signal එක generate කරන විට ශබ්දයක් නාද වේ.
+Alarm වේලාවන්ටද නැවත නැවත ශබ්දය නාද වේ.
+ශබ්දය ලබාගැනීමට SOUND ON තබා පිටුව විවෘතව තබන්න.
+Browser එක වසා දැමූ විට හෝ device එක sleep වූ විට
+alarm සහතික කළ නොහැක.
+මෙය කාල ගණකයක් පමණ ක්‍රීඩා ප්‍රතිඵල පුරෝකථනය කරයි.
+</p>
+
+<footer class="footer">
+MENU BOY AVIATOR SYSTEM
+<br>
+ADVANCED MULTI TIME ALARM
+<br>
+© 2026 MENU BOY
+</footer>
+
+</main>
+</div>
+
+
+<script>
+
+"use strict";
+
+
+// ==================================
+// LOGIN SYSTEM
+// ==================================
+
+const ADMIN_PASSWORD = "MBADMIN#2026";
+const USER_PASSWORD = "MBUSER#2026";
+
+let currentRole = null;
+
+const $ = id => document.getElementById(id);
+
+
+function checkAccess(){
+
+const password = $("accessKey").value.trim();
+
+if(password === ADMIN_PASSWORD){
+
+currentRole = "ADMIN";
+
+openSystem("ADMIN");
+
+}
+
+else if(password === USER_PASSWORD){
+
+currentRole = "USER";
+
+openSystem("USER");
+
+}
+
+else{
+
+$("loginError").textContent =
+"❌ WRONG PASSWORD! TRY AGAIN.";
+
+$("accessKey").value = "";
+
+}
+
+}
+
+
+function openSystem(role){
+
+currentRole = role;
+
+sessionStorage.setItem("MENU_BOY_ROLE",role);
+
+$("loginGate").style.display = "none";
+
+$("appContent").style.display = "block";
+
+$("roleBadge").textContent =
+role === "ADMIN"
+? "🔴 ADMIN ACCESS"
+: "🟢 USER ACCESS";
+
+document.querySelectorAll(".admin-only").forEach(element=>{
+
+element.style.display =
+role === "ADMIN" ? "" : "none";
+
+});
+
+}
+
+
+$("loginBtn").addEventListener("click",checkAccess);
+
+$("accessKey").addEventListener("keydown",function(e){
+
+if(e.key === "Enter"){
+checkAccess();
+}
+
+});
+
+
+// RESTORE CURRENT TAB SESSION
+
+const savedRole = sessionStorage.getItem("MENU_BOY_ROLE");
+
+if(savedRole === "ADMIN" || savedRole === "USER"){
+
+openSystem(savedRole);
+
+}
+
+
+
+// ==================================
+// TIME & ALARM SYSTEM
+// ==================================
+
+let soundEnabled = true;
+
+let alarms = [];
+
+let alerted = [];
+
+let activeAlarms = [];
+
+let audioContext = null;
+
+let repeatTimer = null;
+
+
+// AUDIO SYSTEM
+
+function initAudio(){
+
+const Ctx =
+window.AudioContext || window.webkitAudioContext;
+
+if(!Ctx){
+
+$("status").textContent =
+"මෙම browser එකේ Audio පහසුකම නොමැත.";
+
+return false;
+
+}
+
+if(!audioContext){
+
+audioContext = new Ctx();
+
+}
+
+if(audioContext.state === "suspended"){
+
+audioContext.resume();
+
+}
+
+return true;
+
+}
+
+
+// TIME FORMAT
+
+function formatTime(date){
+
+return date.toLocaleTimeString("en-US",{
+
+hour:"2-digit",
+minute:"2-digit",
+second:"2-digit",
+hour12:true
+
+});
+
+}
+
+
+function makeTime(base,minutes){
+
+return new Date(base.getTime()+minutes*60000);
+
+}
+
+
+// SOUND GENERATOR
+
+function tone(freq,duration,when=0){
+
+if(!soundEnabled || !initAudio()) return;
+
+try{
+
+const osc = audioContext.createOscillator();
+
+const gain = audioContext.createGain();
+
+osc.type = "sine";
+
+osc.frequency.value = freq;
+
+osc.connect(gain);
+
+gain.connect(audioContext.destination);
+
+const t = audioContext.currentTime+when;
+
+gain.gain.setValueAtTime(.18,t);
+
+gain.gain.exponentialRampToValueAtTime(
+.001,
+t+duration
+);
+
+osc.start(t);
+
+osc.stop(t+duration);
+
+}catch(e){
+
+console.error(e);
+
+}
+
+}
+
+
+// SIGNAL SOUND
+
+function playSignalSound(){
+
+if(!soundEnabled) return;
+
+const style = $("alarmSound").value;
+
+if(style === "short"){
+
+tone(1050,.55);
+
+}
+
+else if(style === "siren"){
+
+[650,950,650,950,650].forEach((f,i)=>{
+
+tone(f,.28,i*.32);
+
+});
+
+}
+
+else{
+
+tone(880,.25,0);
+
+tone(1175,.25,.32);
+
+tone(1480,.4,.64);
+
+}
+
+}
+
+
+function playAlarmSound(){
+
+playSignalSound();
+
+}
+
+
+
+// ==================================
+// CALCULATE SIGNAL
+// ==================================
+
+function calculate(){
+
+initAudio();
+
+const value = Number.parseFloat($("value").value);
+
+const start = $("startTime").value;
+
+
+if(!Number.isFinite(value) || !start){
+
+alert("කරුණාකර ODD අගය සහ ආරම්භක වේලාව ඇතුළත් කරන්න.");
+
+return;
+
+}
+
+
+let oddOffsets;
+
+
+if(value >= 6.99 && value <= 9.99){
+
+oddOffsets = [6,7];
+
+}
+
+else if(value > 9.99 && value <= 10.99){
+
+oddOffsets = [3,4];
+
+}
+
+else if(value > 10.99){
+
+oddOffsets = [13,16];
+
+}
+
+else{
+
+alert("6.99 ට අඩු අගයන් සඳහා කාල සීමාවක් සකසා නැත.");
+
+return;
+
+}
+
+
+// BASE TIME
+
+const parts = start.split(":").map(Number);
+
+const base = new Date();
+
+base.setHours(
+parts[0],
+parts[1],
+parts[2] || 0,
+0
+);
+
+
+if(base.getTime() < Date.now()){
+
+base.setDate(base.getDate()+1);
+
+}
+
+
+// RESET PREVIOUS ALARMS
+
+stopAlarm(false);
+
+alarms = [];
+
+
+// DUAL TIME
+
+const oddTimes = oddOffsets.map(n=>makeTime(base,n));
+
+$("time1").textContent = formatTime(oddTimes[0]);
+
+$("time2").textContent = formatTime(oddTimes[1]);
+
+$("offset1").textContent =
+"+"+oddOffsets[0]+" minutes";
+
+$("offset2").textContent =
+"+"+oddOffsets[1]+" minutes";
+
+alarms.push(...oddTimes);
+
+
+// EXTRA TIME PAIRS
+
+const pairs = [
+
+[14,16],
+[29,31],
+[44,46]
+
+];
+
+
+pairs.forEach((pair,i)=>{
+
+const a = makeTime(base,pair[0]);
+
+const b = makeTime(base,pair[1]);
+
+$("pair"+(i+1)+"a").textContent = formatTime(a);
+
+$("pair"+(i+1)+"b").textContent = formatTime(b);
+
+alarms.push(a,b);
+
+});
+
+
+// ALARM SETUP
+
+alarms.sort((a,b)=>a-b);
+
+alerted = alarms.map(()=>false);
+
+$("alarmCount").textContent = String(alarms.length);
+
+$("status").classList.remove("alarm-active");
+
+$("status").textContent =
+"SIGNAL GENERATED — "+alarms.length+" ALARM TIMES READY. 🔊";
+
+
+// PLAY SOUND WHEN SIGNAL GENERATES
+
+playSignalSound();
+
+}
+
+
+
+// ==================================
+// START ALARM
+// ==================================
+
+function startAlarm(index){
+
+if(activeAlarms.includes(index)) return;
+
+activeAlarms.push(index);
+
+$("stopBtn").style.display = "block";
+
+$("status").classList.add("alarm-active");
+
+$("status").textContent =
+"🚨 ALARM ACTIVE ("+(index+1)+"/"+alarms.length+") — STOP කරන තුරු නැවත නාද වේ.";
+
+playAlarmSound();
+
+if(navigator.vibrate){
+
+navigator.vibrate([450,180,450]);
+
+}
+
+
+if(!repeatTimer){
+
+const seconds =
+Number($("repeatSeconds").value)||3;
+
+repeatTimer = setInterval(()=>{
+
+if(activeAlarms.length && soundEnabled){
+
+playAlarmSound();
+
+}
+
+},seconds*1000);
+
+}
+
+}
+
+
+
+// ==================================
+// CHECK ALARM TIMES
+// ==================================
+
+function checkAlarms(){
+
+const now = Date.now();
+
+alarms.forEach((alarm,i)=>{
+
+if(!alerted[i] && now >= alarm.getTime()){
+
+alerted[i] = true;
+
+startAlarm(i);
+
+}
+
+});
+
+}
+
+
+
+// ==================================
+// STOP ALARM
+// ==================================
+
+function stopAlarm(update=true){
+
+activeAlarms = [];
+
+if(repeatTimer){
+
+clearInterval(repeatTimer);
+
+}
+
+repeatTimer = null;
+
+if(navigator.vibrate){
+
+navigator.vibrate(0);
+
+}
+
+$("stopBtn").style.display = "none";
+
+$("status").classList.remove("alarm-active");
+
+if(update){
+
+$("status").textContent =
+"ALL ACTIVE ALARMS STOPPED";
+
+}
+
+}
+
+
+
+// ==================================
+// SOUND ON / OFF
+// ==================================
+
+function toggleSound(){
+
+soundEnabled = !soundEnabled;
+
+$("soundBtn").textContent =
+soundEnabled ? "SOUND ON 🔔" : "SOUND OFF 🔕";
+
+if(!soundEnabled){
+
+$("status").textContent = "SOUND DISABLED";
+
+}
+
+else{
+
+initAudio();
+
+$("status").textContent = "SOUND ENABLED";
+
+}
+
+}
+
+
+
+// ==================================
+// TEST SOUND
+// ==================================
+
+function testAlarm(){
+
+initAudio();
+
+if(!soundEnabled){
+
+$("status").textContent =
+"SOUND OFF — SOUND ON කරන්න.";
+
+return;
+
+}
+
+playSignalSound();
+
+$("status").textContent =
+"TEST SOUND PLAYING 🔊";
+
+}
+
+
+
+// ==================================
+// RESET ALL - ADMIN ONLY
+// ==================================
+
+function resetAll(){
+
+if(currentRole !== "ADMIN"){
+
+alert("ADMIN ACCESS REQUIRED!");
+
+return;
+
+}
+
+stopAlarm(false);
+
+alarms = [];
+
+alerted = [];
+
+$("value").value = "";
+
+$("startTime").value = "";
+
+
+[
+
+"time1",
+"time2",
+"pair1a",
+"pair1b",
+"pair2a",
+"pair2b",
+"pair3a",
+"pair3b"
+
+].forEach(id=>{
+
+$(id).textContent = "--:--:--";
+
+});
+
+
+$("offset1").textContent = "-- minutes";
+
+$("offset2").textContent = "-- minutes";
+
+$("alarmCount").textContent = "0";
+
+$("status").textContent =
+"SYSTEM READY — ODD අගය සහ වේලාව ඇතුළත් කරන්න.";
+
+}
+
+
+
+// ==================================
+// BUTTON EVENTS
+// ==================================
+
+$("calculateBtn").addEventListener("click",calculate);
+
+$("soundBtn").addEventListener("click",toggleSound);
+
+$("testBtn").addEventListener("click",testAlarm);
+
+$("stopBtn").addEventListener("click",()=>stopAlarm(true));
+
+$("resetBtn").addEventListener("click",resetAll);
+
+
+// ENTER KEY
+
+$("value").addEventListener("keydown",e=>{
+
+if(e.key === "Enter") calculate();
+
+});
+
+$("startTime").addEventListener("keydown",e=>{
+
+if(e.key === "Enter") calculate();
+
+});
+
+
+// AUTOMATIC ALARM CHECK
+
+setInterval(checkAlarms,250);
+
+</script>
+
+</body>
+</html></body>
+</html>
